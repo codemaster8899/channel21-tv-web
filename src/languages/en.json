@@ -1,0 +1,78 @@
+{
+  "common": {
+    "sort": "Sort",
+    "episods": "Uploads",
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "seeMore": "See more",
+    "follow": "Follow",
+    "copyright": "All rights reserved. Reproduction, uploading, distribution of the materials of the website by any means is prohibited without the official consent of ''21TV CJSC''.",
+    "copyrightArnology": "© Arnology LLC. All rights reserved.",
+    "contactUs": "Contact us",
+    "basic": "Basic",
+    "back":"BACK",
+    "name": "Name",
+    "lastName": "Last name",
+    "phone": "Phone number",
+    "message": "Leave a message",
+    "send": "Send",
+    "hours": "Hours",
+    "title": "Title",
+    "length": "Length",
+    "lengthShort": "Length",
+    "schedule": "Schedule of the week",
+    "newToOld":"from new to old",
+    "oldToNew": "from old  to new",
+
+    "header": {
+      "results": "Results",
+      "schedule": "Schedule of the week",
+      "aboutUs": "About us",
+      "faces": "Faces",
+      "programs": "Programs",
+      "shows": "Tv shows",
+      "contact": "Contact",
+      "live": "Live",
+      "films": "Films",
+      "search": "Search"
+    },
+    "calendar": {
+      "January": "January",
+      "February": "February",
+      "March": "March",
+      "April": "April",
+      "May": "May",
+      "June": "June",
+      "July": "July",
+      "August": "August",
+      "September": "September",
+      "October": "October",
+      "November": "November",
+      "December": "December",
+      "Monday": "Monday",
+      "Tuesday": "Tuesday",
+      "Wednesday": "Wednesday",
+      "Thursday": "Thursday",
+      "Friday": "Friday",
+      "Saturday": "Saturday",
+      "Sunday": "Sunday",
+      "Today": "Today",
+      "Tomorrow": "Tomorrow",
+      "short": {
+        "Today": "Today",
+        "Tomorrow": "Tomorrow",
+        "Monday": "Mon.",
+        "Tuesday": "Tue.",
+        "Wednesday": "Wed.",
+        "Thursday": "Thu.",
+        "Friday": "Fri.",
+        "Saturday": "Суббота",
+        "Sunday": "Sat."
+      }
+    },
+    "swiper": {
+      "watchNow": "Watch now",
+      "onAir": "On the air today"
+    }
+  }
+}

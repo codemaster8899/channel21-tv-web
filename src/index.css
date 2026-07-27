@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.mySwiper div {
+  height: 100%;
+}
+
+.mySwiper .slick-dots {
+  width: fit-content !important;
+  justify-self: center !important;
+  margin: 0 auto !important;
+  left: 50% !important;
+  transform: translate(0);
+  background: none;
+  bottom: 0px !important;
+}
+.banerHader div {
+  height: 100% !important;
+}
+.mySwiper .slick-dots li {
+  background-color: #ffffff !important;
+  border-radius: 50%;
+  width: 8px !important;
+  height: 8px !important;
+  bottom: 0px !important;
+}
+.mySwiper .slick-dots .slick-active {
+  background-color: #ed0000 !important;
+  border: 1px solid white;
+}
+.mySwiper .slick-dots li button {
+  width: 8px !important;
+  height: 8px !important;
+}
+.mySwiper .slick-dots li button:before {
+  display: none !important;
+  color: none !important ;
+  font-size: none !important;
+}
+.customScrollx::-webkit-scrollbar-track {
+  background: #ffffff00 !important;
+  border-radius: 4px;
+}
+.customScrollx::-webkit-scrollbar-thumb {
+  background: #ffffff33 !important;
+  border-radius: 4px;
+}
+
+.customScrollx::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.customScroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.customScroll::-webkit-scrollbar-track {
+  background: #ffffff26;
+  border-radius: 4px;
+}
+
+.customScroll::-webkit-scrollbar-thumb {
+  background: #ffffff33;
+  border-radius: 4px;
+}
+.customModalFace div {
+  border-radius: 20px !important;
+}
+.borderRedGradient {
+  border-image: linear-gradient(
+      90deg,
+      rgba(187, 23, 33, 0) 0%,
+      #bb1721 26.2%,
+      #bb1721 74.08%,
+      rgba(187, 23, 33, 0) 100%
+    )
+    1 1 100%;
+}
+.borderGrayGradient {
+  border-image: linear-gradient(
+      90deg,
+      rgba(196, 196, 196, 0) 0%,
+      #c4c4c4 50%,
+      rgba(196, 196, 196, 0) 100%
+    )
+    1 1 100%;
+}
+.borderWhiteGradient {
+  border-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      #fff 50%,
+      rgba(255, 255, 255, 0) 100%
+    )
+    1 1 1 100%;
+}
+.transit {
+  transition: all 0.2s ease-in-out;
+}
+.transit-2 {
+  transition: all 0.4s ease-in-out;
+}
+.transit-3 {
+  transition: all 1.8s ease-in-out;
+}
+.transit-4 {
+  transition: right 0.4s ease-in-out;
+}
+
+/* .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused {
+  color: black !important;
+}
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: black !important;
+  border-width: 1px !important;
+}
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
+  background: #e6e6e6 !important;
+  border-radius: 5px !important;
+} */
+.schedulDays::-webkit-scrollbar {
+  display: none !important;
+}
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.lds-ring.red div {
+  border: 5px solid red;
+  border-color: red transparent transparent transparent;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  margin: 10%;
+  border: 10% solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.35s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.25s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.schedulDays {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+}
+@media screen and (max-width: 880px) {
+  .mySwiper .slick-dots {
+    width: fit-content !important;
+    justify-self: center !important;
+    margin: 0 auto !important;
+    left: 440px !important;
+    transform: translate(0);
+  }
+}
+@media screen and (max-width: 767px) {
+  .mySwiper .slick-dots {
+    width: fit-content !important;
+    justify-self: center !important;
+    margin: 0 auto !important;
+    left: 50% !important;
+    transform: translate(-50%);
+  }
+}

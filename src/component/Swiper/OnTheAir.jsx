@@ -70,6 +70,9 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
       }),
     );
   }, [schedule]);
+
+  const displayOnAir = withTempImageFallback(onAir, 6); // TEMPORARY: fallback when API returns empty
+
   return (
     <div className="w-full h-full relative  bg-black/40 z-10 rounded-r-2xl ">
       <p className="m-2 lg:m-8 text-lg text-white font-semibold pt-8">
@@ -80,8 +83,9 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
         className="m-2 lg:m-8 mr-2 pr-6 customScroll overflow-y-scroll h-[calc(100%-110px)] scroll-smooth box-border"
         ref={contRef}
       >
-        {withTempImageFallback(onAir, 6) // TEMPORARY: fallback when API returns empty
+        {displayOnAir
           .sort((a, b) => {
+            if (!a.startDate || !b.startDate) return 0;
             if (
               new Date(a.startDate).getTime() > new Date(b.startDate).getTime()
             ) {
@@ -95,27 +99,20 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
             return 0;
           })
           .map((item, index) => {
+            const nextItem =
+              displayOnAir[index + 1 > displayOnAir.length - 1 ? 0 : index + 1];
+            const isCurrentlyOnAir =
+              item.startDate &&
+              nextItem?.startDate &&
+              checkTime(item.startDate, nextItem.startDate);
+
             return (
               <div
                 key={`key_${index}`}
                 className={`h-32 flex items-center w-full p-2 hover:bg-white/20 rounded-3xl  ${
-                  checkTime(
-                    item.startDate,
-                    onAir[index + 1 > onAir.length - 1 ? 0 : index + 1]
-                      .startDate,
-                  )
-                    ? "bg-white/20 hover:bg-white/40"
-                    : ""
+                  isCurrentlyOnAir ? "bg-white/20 hover:bg-white/40" : ""
                 }`}
-                ref={
-                  checkTime(
-                    item.startDate,
-                    onAir[index + 1 > onAir.length - 1 ? 0 : index + 1]
-                      .startDate,
-                  )
-                    ? myRef
-                    : null
-                }
+                ref={isCurrentlyOnAir ? myRef : null}
               >
                 <div className="flex gap-2 items-start">
                   <div className="w-[135px] h-[95px] lg:w-[155px] ml-3 rounded-lg overflow-hidden">

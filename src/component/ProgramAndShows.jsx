@@ -1,6 +1,6 @@
 import { PlayCircleOutline } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import EpisodCard from "./EpisodCard";
 import { connect } from "react-redux";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { Dialog } from "@mui/material";
 import ReactPlayer from "react-player";
 import playIcon from "src/assets/images/play.png";
-import EmptyEpisodCard from "./EmptyEpisodCard";
 import {
   getFigmaHeroImage,
   getFigmaEpisodeImage,
@@ -16,14 +15,19 @@ import {
   withTempSeriesFallback,
 } from "src/utils/tempHardcodedImages";
 
-const ProgramAndShows = ({ header, language, state, setLoader }) => {
+const ProgramAndShows = ({
+  header,
+  language,
+  state,
+  setLoader,
+  showHero = true,
+}) => {
   const [player, setPlayer] = useState({
     open: false,
     image: "",
     link: "",
   });
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [isDown, setIsDown] = useState(false);
   const [pageSize, setPageSize] = useState(5);
   const [toShow, setToshow] = useState(pageSize);
@@ -56,18 +60,24 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
 
   return (
     <div className="text-lightText dark:text-darkText transit dark:bg-[#333333]">
-      <p className="text-[#fff] md:text-4xl lg:text-5xl font-semibold w-full text-center max-md:pt-40 pt-24 pb-5 bg-[#17171B]">
+      <p
+        className={`text-[#fff] md:text-4xl lg:text-5xl font-semibold w-full text-center pb-5 bg-[#17171B] ${
+          showHero ? "max-md:pt-40 pt-24" : "pt-8"
+        }`}
+      >
         {t("header." + header)}{" "}
       </p>
-      <div className="h-[200px] md:h-[400px] w-full">
-        <img
-          src={getFigmaHeroImage(0)} // TEMPORARY: Figma hero — remove when API images are restored
-          alt=""
-          className="h-full w-full object-cover"
-        />
-      </div>
+      {showHero && (
+        <div className="h-[200px] md:h-[400px] w-full">
+          <img
+            src={getFigmaHeroImage(0)} // TEMPORARY: Figma hero — remove when API images are restored
+            alt=""
+            className="h-full w-full object-cover"
+          />
+        </div>
+      )}
       <div className="pb-12 xl:pb-28 ">
-        {withTempProgramFallback(state, 3) // TEMPORARY: fallback when API returns empty
+        {withTempProgramFallback(state) // TEMPORARY: fallback when API returns empty
           .sort((a, b) => {
             if (!a.createdAt || !b.createdAt) return 0;
             if (
@@ -108,61 +118,22 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
                       </Link>
                     </p>
                   </div>
-                  <div className="flex customScrollx overflow-x-scroll mx-auto  w-11/12 xl:w-[1200px] gap-5">
-                    {withTempSeriesFallback(item.series, 4).map((i, ind) => {
-                      if (item.series?.length > 3) {
-                        if (ind < 3) {
-                          return (
-                            <div
-                              key={ind}
-                              className="flex justify-center"
-                              onClick={() => {
-                                setPlayer({
-                                  image: getFigmaEpisodeImage(index * 4 + ind), // TEMPORARY: Figma episode — revert to i.image
-                                  link: i.link,
-                                  open: true,
-                                });
-                              }}
-                            >
-                              <EpisodCard item={i} index={index * 4 + ind} />
-                            </div>
-                          );
-                        }
-                        if (ind === 3) {
-                          return (
-                            <div
-                              key={ind}
-                              className="flex justify-center"
-                              onClick={() => {
-                                navigate(`/tab_${item._id}`);
-                              }}
-                            >
-                              <EmptyEpisodCard
-                                item={i}
-                                count={(item.series?.length || 4) - 3}
-                                index={index * 4 + ind}
-                              />
-                            </div>
-                          );
-                        }
-                      } else {
-                        return (
-                          <div
-                            key={ind}
-                            className="flex justify-center "
-                            onClick={() => {
-                              setPlayer({
-                                image: getFigmaEpisodeImage(index * 4 + ind), // TEMPORARY: Figma episode — revert to i.image
-                                link: i.link,
-                                open: true,
-                              });
-                            }}
-                          >
-                            <EpisodCard item={i} index={index * 4 + ind} />
-                          </div>
-                        );
-                      }
-                    })}
+                  <div className="flex customScrollx overflow-x-auto md:overflow-visible mx-auto w-11/12 xl:w-[1200px] gap-5">
+                    {withTempSeriesFallback(item.series, 4).map((i, ind) => (
+                      <div
+                        key={ind}
+                        className="flex justify-center shrink-0"
+                        onClick={() => {
+                          setPlayer({
+                            image: getFigmaEpisodeImage(index * 4 + ind), // TEMPORARY: Figma episode — revert to i.image
+                            link: i.link,
+                            open: true,
+                          });
+                        }}
+                      >
+                        <EpisodCard item={i} index={index * 4 + ind} />
+                      </div>
+                    ))}
                   </div>
                 </div>
               );

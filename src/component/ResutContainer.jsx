@@ -31,7 +31,7 @@ const ResutContainer = ({ header, language, state, setLoader }) => {
         {t("header." + header)}{" "}
       </p>
       <div className="pb-12 xl:pb-28 ">
-        {withTempProgramFallback(state, 3) // TEMPORARY: fallback when API returns empty
+        {withTempProgramFallback(state) // TEMPORARY: fallback when API returns empty
           .sort((a, b) => {
             if (!a.createdAt || !b.createdAt) return 0;
             if (

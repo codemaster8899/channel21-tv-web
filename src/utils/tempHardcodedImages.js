@@ -26,6 +26,24 @@ import face03 from "src/assets/images/events/face-03-tv-interview.png";
 import face04 from "src/assets/images/events/face-04-argishti-aronyan.png";
 import face05 from "src/assets/images/events/face-05-rafo-khachatryan.png";
 
+// TEMPORARY: Programs page screenshot — 4 sections × 4 episode cards
+import yerevanyan01 from "src/assets/images/programs/yerevanyan-01.png";
+import yerevanyan02 from "src/assets/images/programs/yerevanyan-02.png";
+import yerevanyan03 from "src/assets/images/programs/yerevanyan-03.png";
+import yerevanyan04 from "src/assets/images/programs/yerevanyan-04.png";
+import orBari01 from "src/assets/images/programs/or-bari-01.png";
+import orBari02 from "src/assets/images/programs/or-bari-02.png";
+import orBari03 from "src/assets/images/programs/or-bari-03.png";
+import orBari04 from "src/assets/images/programs/or-bari-04.png";
+import withoutTie01 from "src/assets/images/programs/without-tie-01.png";
+import withoutTie02 from "src/assets/images/programs/without-tie-02.png";
+import withoutTie03 from "src/assets/images/programs/without-tie-03.png";
+import withoutTie04 from "src/assets/images/programs/without-tie-04.png";
+import eldersSing01 from "src/assets/images/programs/elders-sing-01.png";
+import eldersSing02 from "src/assets/images/programs/elders-sing-02.png";
+import eldersSing03 from "src/assets/images/programs/elders-sing-03.png";
+import eldersSing04 from "src/assets/images/programs/elders-sing-04.png";
+
 /** Homepage hero carousel — Boing Orchestra (Figma hero) */
 export const FIGMA_HERO_IMAGES = [heroBoing];
 
@@ -47,8 +65,50 @@ export const FIGMA_PROGRAM_BANNERS = [
 /** Faces row on homepage + /faces grid (left-to-right) */
 export const FIGMA_FACE_PORTRAITS = [face01, face02, face03, face04, face05];
 
-/** Episode cards on programs/shows pages */
-export const FIGMA_EPISODE_IMAGES = [onAir01, onAir02, onAir03, onAir04];
+/** Programs page — 4 rows matching Figma screenshot (4 cards each) */
+export const FIGMA_PROGRAM_SECTIONS = [
+  {
+    _id: "temp-yerevanyan-yereko",
+    name: {
+      am: "Երևանյան Երեկո",
+      en: "Yerevan Evening",
+      ru: "Ереванский вечер",
+    },
+    images: [yerevanyan01, yerevanyan02, yerevanyan03, yerevanyan04],
+  },
+  {
+    _id: "temp-or-bari",
+    name: {
+      am: "Օրը Բարի",
+      en: "Good Day",
+      ru: "Добрый день",
+    },
+    images: [orBari01, orBari02, orBari03, orBari04],
+  },
+  {
+    _id: "temp-without-tie",
+    name: {
+      am: "Առանց Փողկապի",
+      en: "Without a Tie",
+      ru: "Без галстука",
+    },
+    images: [withoutTie01, withoutTie02, withoutTie03, withoutTie04],
+  },
+  {
+    _id: "temp-elders-sing",
+    name: {
+      am: "Երբ Երգում են Մեծերը",
+      en: "When the Elders Sing",
+      ru: "Когда поют старшие",
+    },
+    images: [eldersSing01, eldersSing02, eldersSing03, eldersSing04],
+  },
+];
+
+/** Flat episode list for card index lookup (section × 4 + card) */
+export const FIGMA_EPISODE_IMAGES = FIGMA_PROGRAM_SECTIONS.flatMap(
+  (section) => section.images,
+);
 
 /** Films page items */
 export const FIGMA_FILM_IMAGES = [event05, event06, event07, event08];
@@ -72,6 +132,12 @@ export const getFigmaFacePortrait = (index = 0) =>
   pickFrom(FIGMA_FACE_PORTRAITS, index);
 export const getFigmaEpisodeImage = (index = 0) =>
   pickFrom(FIGMA_EPISODE_IMAGES, index);
+export const getFigmaProgramSectionImage = (
+  sectionIndex = 0,
+  episodeIndex = 0,
+) =>
+  FIGMA_PROGRAM_SECTIONS[sectionIndex]?.images[episodeIndex] ??
+  getFigmaEpisodeImage(sectionIndex * 4 + episodeIndex);
 export const getFigmaFilmImage = (index = 0) =>
   pickFrom(FIGMA_FILM_IMAGES, index);
 export const getFigmaFacesHero = () => FIGMA_FACES_HERO;
@@ -109,12 +175,31 @@ export const withTempSeriesFallback = (
         createTempPlaceholder(`temp-series-${index}`),
       );
 
-export const withTempProgramFallback = (programs, count = 3) =>
+const TEMP_EPISODE_DURATIONS = ["22:12", "1:05:49", "45:30", "38:15"];
+const TEMP_EPISODE_DATES = [
+  "2022-01-15T12:00:00.000Z",
+  "2022-01-22T12:00:00.000Z",
+  "2022-01-29T12:00:00.000Z",
+  "2022-02-05T12:00:00.000Z",
+];
+
+export const withTempProgramFallback = (
+  programs,
+  count = FIGMA_PROGRAM_SECTIONS.length,
+) =>
   programs?.length
     ? programs
-    : Array.from({ length: count }, (_, index) => ({
-        ...createTempPlaceholder(`temp-program-${index}`),
-        series: withTempSeriesFallback([], FIGMA_EPISODE_IMAGES.length),
+    : FIGMA_PROGRAM_SECTIONS.slice(0, count).map((section, sectionIndex) => ({
+        ...createTempPlaceholder(section._id),
+        name: section.name,
+        series: section.images.map((_, episodeIndex) => ({
+          ...createTempPlaceholder(
+            `temp-series-${sectionIndex}-${episodeIndex}`,
+          ),
+          title: section.name,
+          duration: TEMP_EPISODE_DURATIONS[episodeIndex],
+          date: TEMP_EPISODE_DATES[episodeIndex],
+        })),
       }));
 
 export const withTempFilmFallback = (

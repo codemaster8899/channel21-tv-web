@@ -23,7 +23,6 @@ const HomeContainer = ({ main }) => {
     <div className="dark:text-darkText">
       <div className="w-full pt-10 md:pt-20 flex justify-center ">
         <div className="rounded-2xl w-[280px] md:w-[600px] lg:w-[930px] h-[157.5px] md:h-[337.5px] lg:h-[523.125px] overflow-hidden">
-          <img src="" alt="" />
           <ReactPlayer
             playing={true}
             url={main.liveLink}

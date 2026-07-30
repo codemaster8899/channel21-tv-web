@@ -6,8 +6,10 @@ import ModalFace from "src/component/Faces/ModalFace";
 import { connect } from "react-redux";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
 import {
-  getTempHardcodedImage,
+  getFigmaFacesHero,
+  getFigmaFacePortrait,
   withTempImageFallback,
+  FIGMA_FACE_PORTRAITS,
 } from "src/utils/tempHardcodedImages";
 
 const Faces = ({ faces, setLoader }) => {
@@ -59,7 +61,7 @@ const Faces = ({ faces, setLoader }) => {
     <div className="text-lightText dark:text-darkText transit dark:bg-[#333333]">
       <div className="h-[250px] md:h-[600px] w-full ">
         <img
-          src={getTempHardcodedImage(0)} // TEMPORARY: hardcoded image — revert to faces.content.image
+          src={getFigmaFacesHero()} // TEMPORARY: Figma faces hero — revert to faces.content.image
           alt="team"
           width="100%"
           height="600px"
@@ -70,7 +72,7 @@ const Faces = ({ faces, setLoader }) => {
         {t("header.faces")}
       </p>
       <div className="mx-auto w-11/12 xl:w-[1200px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 py-12 md:py-28">
-        {withTempImageFallback(faces.eachFace, 8) // TEMPORARY: fallback when API returns empty
+        {withTempImageFallback(faces.eachFace, FIGMA_FACE_PORTRAITS.length) // TEMPORARY: Figma faces fallback
           .map((item, index) => {
             if (index < toShow) {
               return (

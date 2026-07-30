@@ -7,8 +7,9 @@ import Slider, { slickGoTo } from "react-slick";
 import ButtonNew from "src/component/ButtonNew";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
 import {
-  getTempHardcodedImage,
+  getFigmaProgramBanner,
   withTempImageFallback,
+  FIGMA_PROGRAM_BANNERS,
 } from "src/utils/tempHardcodedImages";
 const settings = {
   infinite: false,
@@ -144,7 +145,12 @@ const BanersContainer = ({ programs, setLoader }) => {
         </div>
       </div>
       <div className="flex flex-wrap  justify-center  gap-y-3 mx-auto w-11/12 xl:w-[1200px]">
-        {[...withTempImageFallback(programs[current], 8)]
+        {[
+          ...withTempImageFallback(
+            programs[current],
+            FIGMA_PROGRAM_BANNERS.length,
+          ),
+        ]
           .sort((a, b) => {
             if (a.banners_order > b.banners_order) {
               return 1;
@@ -162,7 +168,7 @@ const BanersContainer = ({ programs, setLoader }) => {
                 >
                   <Link to={`/tab_${item._id}`}>
                     <img
-                      src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                      src={getFigmaProgramBanner(index)} // TEMPORARY: Figma program banner — revert to item.image
                       width="285"
                       height="315"
                       onClick={() => {}}

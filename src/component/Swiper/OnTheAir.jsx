@@ -8,8 +8,9 @@ import { monthNames } from "src/utils/config";
 import { connect } from "react-redux";
 import { getScheduleStateTC } from "src/redux/reducers/ScheduleReducer";
 import {
-  getTempHardcodedImage,
+  getFigmaOnAirImage,
   withTempImageFallback,
+  FIGMA_ON_AIR_IMAGES,
 } from "src/utils/tempHardcodedImages";
 
 const OnTheAir = ({ main, schedule, getScheduleState }) => {
@@ -71,7 +72,7 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
     );
   }, [schedule]);
 
-  const displayOnAir = withTempImageFallback(onAir, 6); // TEMPORARY: fallback when API returns empty
+  const displayOnAir = withTempImageFallback(onAir, FIGMA_ON_AIR_IMAGES.length); // TEMPORARY: Figma on-air fallback
 
   return (
     <div className="w-full h-full relative  bg-black/40 z-10 rounded-r-2xl ">
@@ -118,7 +119,7 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
                   <div className="w-[135px] h-[95px] lg:w-[155px] ml-3 rounded-lg overflow-hidden">
                     <div className="h-full w-full ">
                       <img
-                        src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                        src={getFigmaOnAirImage(index)} // TEMPORARY: Figma on-air — revert to item.image
                         className="h-full w-full object-cover"
                       />
                     </div>

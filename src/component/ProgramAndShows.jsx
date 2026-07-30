@@ -10,7 +10,8 @@ import ReactPlayer from "react-player";
 import playIcon from "src/assets/images/play.png";
 import EmptyEpisodCard from "./EmptyEpisodCard";
 import {
-  getTempHardcodedImage,
+  getFigmaHeroImage,
+  getFigmaEpisodeImage,
   withTempProgramFallback,
   withTempSeriesFallback,
 } from "src/utils/tempHardcodedImages";
@@ -60,7 +61,7 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
       </p>
       <div className="h-[200px] md:h-[400px] w-full">
         <img
-          src={getTempHardcodedImage(0)} // TEMPORARY: hardcoded hero — remove when API images are restored
+          src={getFigmaHeroImage(0)} // TEMPORARY: Figma hero — remove when API images are restored
           alt=""
           className="h-full w-full object-cover"
         />
@@ -117,7 +118,7 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
                               className="flex justify-center"
                               onClick={() => {
                                 setPlayer({
-                                  image: getTempHardcodedImage(index * 4 + ind), // TEMPORARY: hardcoded image — revert to i.image
+                                  image: getFigmaEpisodeImage(index * 4 + ind), // TEMPORARY: Figma episode — revert to i.image
                                   link: i.link,
                                   open: true,
                                 });
@@ -151,7 +152,7 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
                             className="flex justify-center "
                             onClick={() => {
                               setPlayer({
-                                image: getTempHardcodedImage(index * 4 + ind), // TEMPORARY: hardcoded image — revert to i.image
+                                image: getFigmaEpisodeImage(index * 4 + ind), // TEMPORARY: Figma episode — revert to i.image
                                 link: i.link,
                                 open: true,
                               });

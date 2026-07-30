@@ -9,7 +9,8 @@ import { connect } from "react-redux";
 import playIcon from "src/assets/images/play.png";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
 import {
-  getTempHardcodedImage,
+  getFigmaHeroImage,
+  getFigmaFilmImage,
   withTempFilmFallback,
 } from "src/utils/tempHardcodedImages";
 import { useEffect, useState } from "react";
@@ -55,7 +56,7 @@ const Films = ({ language, films, setLoader }) => {
       </p>
       <div className="h-[200px] md:h-[400px] w-full">
         <img
-          src={getTempHardcodedImage(1)} // TEMPORARY: hardcoded hero — remove when API images are restored
+          src={getFigmaHeroImage(0)} // TEMPORARY: Figma hero — remove when API images are restored
           alt=""
           className="h-full w-full object-cover"
         />
@@ -103,11 +104,11 @@ const Films = ({ language, films, setLoader }) => {
                                     <img src={playIcon} width="60px" />
                                   </button>
                                 }
-                                light={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                                light={getFigmaFilmImage(index)} // TEMPORARY: Figma film — revert to item.image
                               />
                             ) : (
                               <img
-                                src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                                src={getFigmaFilmImage(index)} // TEMPORARY: Figma film — revert to item.image
                                 alt=""
                                 className="w-full h-full object-cover"
                               />

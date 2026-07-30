@@ -3,7 +3,7 @@ import { IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { connect } from "react-redux";
 import { monthNames } from "src/utils/config";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import { getFigmaEpisodeImage } from "src/utils/tempHardcodedImages";
 
 const EmptyEpisodCard = ({ item, count, index = 0 }) => {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ const EmptyEpisodCard = ({ item, count, index = 0 }) => {
         <p className="drop-shadow-3xl text-[55px]">+{count}</p>
       </div>
       <img
-        src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+        src={getFigmaEpisodeImage(index)} // TEMPORARY: Figma episode — revert to item.image
         alt=""
         className="blur"
       />

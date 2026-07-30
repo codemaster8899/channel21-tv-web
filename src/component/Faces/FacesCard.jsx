@@ -2,7 +2,7 @@ import FBOut from "src/assets/icons/FBOut";
 import InstOut from "src/assets/icons/InstOut";
 import { Share } from "@mui/icons-material";
 import { connect } from "react-redux";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import { getFigmaFacePortrait } from "src/utils/tempHardcodedImages";
 
 const FacesCard = ({ index, item, onClickProps, language }) => {
   return (
@@ -10,7 +10,7 @@ const FacesCard = ({ index, item, onClickProps, language }) => {
       <div className="w-full">
         <div className="w-full h-[230px] md:h-[250px] lg:h-[270px] rounded-[10px] overflow-hidden cursor-pointer">
           <img
-            src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+            src={getFigmaFacePortrait(index)} // TEMPORARY: Figma face portrait — revert to item.image
             alt=""
             className="w-full h-full object-cover"
             onClick={() => onClickProps(item)}

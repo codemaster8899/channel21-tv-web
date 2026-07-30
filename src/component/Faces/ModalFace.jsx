@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import FBOut from "src/assets/icons/FBOut";
 import InstOut from "src/assets/icons/InstOut";
 import ShareIcon from "src/assets/icons/ShareIcon";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import { getFigmaFacePortrait } from "src/utils/tempHardcodedImages";
 
 const ModalFace = ({ currentFace, fullWidth, setCurrentFace, language }) => {
   return (
@@ -35,7 +35,7 @@ const ModalFace = ({ currentFace, fullWidth, setCurrentFace, language }) => {
               </div>
               <div className="rounded-[10px] overflow-hidden w-full md:w-[250px] h-[240px] float-left mr-5 mb-2">
                 <img
-                  src={getTempHardcodedImage(0)} // TEMPORARY: hardcoded image — revert to currentFace.image
+                  src={getFigmaFacePortrait(0)} // TEMPORARY: Figma face portrait — revert to currentFace.image
                   width="250px"
                   height="240px"
                   alt=""

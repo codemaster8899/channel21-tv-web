@@ -9,7 +9,8 @@ import { Dialog } from "@mui/material";
 import ReactPlayer from "react-player";
 import playIcon from "src/assets/images/play.png";
 import {
-  getTempHardcodedImage,
+  getFigmaFilmImage,
+  getFigmaEpisodeImage,
   withTempProgramFallback,
   withTempSeriesFallback,
 } from "src/utils/tempHardcodedImages";
@@ -70,11 +71,11 @@ const ResutContainer = ({ header, language, state, setLoader }) => {
                                 <img src={playIcon} width="60px" />
                               </button>
                             }
-                            light={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                            light={getFigmaFilmImage(index)} // TEMPORARY: Figma film — revert to item.image
                           />
                         ) : (
                           <img
-                            src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                            src={getFigmaFilmImage(index)} // TEMPORARY: Figma film — revert to item.image
                             alt=""
                             className="w-full h-full object-cover"
                           />
@@ -126,7 +127,7 @@ const ResutContainer = ({ header, language, state, setLoader }) => {
                           className="flex justify-center"
                           onClick={() =>
                             setPlayer({
-                              image: getTempHardcodedImage(index * 4 + ind), // TEMPORARY: hardcoded image — revert to i.image
+                              image: getFigmaEpisodeImage(index * 4 + ind), // TEMPORARY: Figma episode — revert to i.image
                               link: i.link,
                               open: true,
                             })

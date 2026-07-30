@@ -13,8 +13,9 @@ import {
 import playIcon from "src/assets/images/play.png";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
 import {
-  getTempHardcodedImage,
+  getFigmaEpisodeImage,
   withTempImageFallback,
+  FIGMA_EPISODE_IMAGES,
 } from "src/utils/tempHardcodedImages";
 import {
   ClickAwayListener,
@@ -87,7 +88,10 @@ const EachProgram = ({
       behavior: "smooth",
     });
   }, []);
-  const displayEpisods = withTempImageFallback(episods, 8); // TEMPORARY: fallback when API returns empty
+  const displayEpisods = withTempImageFallback(
+    episods,
+    FIGMA_EPISODE_IMAGES.length,
+  ); // TEMPORARY: Figma episode fallback
 
   return (
     <div className="text-lightText dark:text-darkText transit dark:bg-[#333333]">
@@ -109,11 +113,11 @@ const EachProgram = ({
                       }
                       controls
                       url={displayEpisods[displayEpisods.length - 1].link}
-                      light={getTempHardcodedImage(0)} // TEMPORARY: hardcoded image — revert to episods[...].image
+                      light={getFigmaEpisodeImage(0)} // TEMPORARY: Figma episode — revert to episods[...].image
                     />
                   ) : (
                     <img
-                      src={getTempHardcodedImage(0)} // TEMPORARY: hardcoded image — revert to episods[...].image
+                      src={getFigmaEpisodeImage(0)} // TEMPORARY: Figma episode — revert to episods[...].image
                       alt=""
                       className="w-full h-full object-cover rounded-2xl"
                     />
@@ -218,7 +222,7 @@ const EachProgram = ({
                       className={`w-full flex justify-center `}
                       onClick={() =>
                         setPlayer({
-                          image: getTempHardcodedImage(index), // TEMPORARY: hardcoded image — revert to item.image
+                          image: getFigmaEpisodeImage(index), // TEMPORARY: Figma episode — revert to item.image
                           link: item.link,
                           open: true,
                         })

@@ -8,8 +8,9 @@ import {
   hoverFaceCardAC,
 } from "src/redux/reducers/FacesReducer";
 import {
-  getTempHardcodedImage,
+  getFigmaFacePortrait,
   withTempImageFallback,
+  FIGMA_FACE_PORTRAITS,
 } from "src/utils/tempHardcodedImages";
 
 const FacesContainer = ({ facesProps, language }) => {
@@ -77,7 +78,10 @@ const FacesContainer = ({ facesProps, language }) => {
   };
 
   useEffect(() => {
-    const source = withTempImageFallback(facesProps, 8); // TEMPORARY: fallback when API returns empty
+    const source = withTempImageFallback(
+      facesProps,
+      FIGMA_FACE_PORTRAITS.length,
+    ); // TEMPORARY: Figma faces fallback
     if (source.length < 9) {
       setFaces([...source, ...source, ...source, ...source, ...source]);
     } else setFaces([...source]);
@@ -123,7 +127,7 @@ const FacesContainer = ({ facesProps, language }) => {
                 <div className="relative w-full h-full">
                   <img
                     className="w-full h-full object-cover"
-                    src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                    src={getFigmaFacePortrait(index)} // TEMPORARY: Figma face portrait — revert to item.image
                     width="320px"
                     alt=""
                     onMouseEnter={() => {

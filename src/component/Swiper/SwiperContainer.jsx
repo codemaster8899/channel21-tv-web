@@ -14,7 +14,7 @@ import { setLoaderAC } from "src/redux/reducers/MainReducer";
 import Carousel from "./Carousel";
 import playIcon from "src/assets/images/play.png";
 import {
-  getTempHardcodedImage,
+  getFigmaHeroImage,
   withTempImageFallback,
 } from "src/utils/tempHardcodedImages";
 
@@ -47,7 +47,7 @@ const SwiperContainer = ({
       setPlayer({
         open: true,
         link: newItem.link,
-        image: getTempHardcodedImage(slideIndex >= 0 ? slideIndex : 0), // TEMPORARY: hardcoded image — revert to newItem.image
+        image: getFigmaHeroImage(slideIndex >= 0 ? slideIndex : 0), // TEMPORARY: Figma hero — revert to newItem.image
       });
     }
   }, [item]);
@@ -79,7 +79,7 @@ const SwiperContainer = ({
       <div className="relative">
         <div className="relative h-[250px] md:h-[600px] xl:h-[840px] ">
           <Carousel>
-            {withTempImageFallback(slider, 5) // TEMPORARY: fallback when API returns empty
+            {withTempImageFallback(slider, 1) // TEMPORARY: Figma hero fallback
               .sort((a, b) => {
                 if (a.slider_order > b.slider_order) {
                   return 1;
@@ -93,7 +93,7 @@ const SwiperContainer = ({
                 return (
                   <div className="w-full h-full relative" key={`key_${index}`}>
                     <img
-                      src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                      src={getFigmaHeroImage(index)} // TEMPORARY: Figma hero — revert to item.image
                       className="h-full w-full object-cover"
                       alt=""
                     />

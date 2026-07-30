@@ -8,7 +8,11 @@ import { useEffect, useState } from "react";
 import { Dialog } from "@mui/material";
 import ReactPlayer from "react-player";
 import playIcon from "src/assets/images/play.png";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import {
+  getTempHardcodedImage,
+  withTempProgramFallback,
+  withTempSeriesFallback,
+} from "src/utils/tempHardcodedImages";
 
 const ResutContainer = ({ header, language, state, setLoader }) => {
   const [player, setPlayer] = useState({
@@ -26,8 +30,9 @@ const ResutContainer = ({ header, language, state, setLoader }) => {
         {t("header." + header)}{" "}
       </p>
       <div className="pb-12 xl:pb-28 ">
-        {[...state]
+        {withTempProgramFallback(state, 3) // TEMPORARY: fallback when API returns empty
           .sort((a, b) => {
+            if (!a.createdAt || !b.createdAt) return 0;
             if (
               new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
             ) {
@@ -53,26 +58,36 @@ const ResutContainer = ({ header, language, state, setLoader }) => {
                   <div className="w-full lg:flex p-10 box-border">
                     <div>
                       <div className="md:w-[500px] h-[200px] md:h-[330px] rounded-2xl overflow-hidden">
-                        <ReactPlayer
-                          width="100%"
-                          height="100%"
-                          playing={true}
-                          controls
-                          url={item.link}
-                          playIcon={
-                            <button>
-                              <img src={playIcon} width="60px" />
-                            </button>
-                          }
-                          light={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
-                        />
+                        {item.link ? (
+                          <ReactPlayer
+                            width="100%"
+                            height="100%"
+                            playing={true}
+                            controls
+                            url={item.link}
+                            playIcon={
+                              <button>
+                                <img src={playIcon} width="60px" />
+                              </button>
+                            }
+                            light={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                          />
+                        ) : (
+                          <img
+                            src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        )}
                       </div>
                     </div>
                     <div className="lg:flex w-full justify-center items-center pt-5">
                       <div className=" w-4/5">
-                        <p className="font-semibold">{item.name[language]}</p>
+                        <p className="font-semibold">{item.name?.[language]}</p>
 
-                        <p className="text-xs">{item.description[language]}</p>
+                        <p className="text-xs">
+                          {item.description?.[language]}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -93,7 +108,7 @@ const ResutContainer = ({ header, language, state, setLoader }) => {
                         <span className="text-red-700 md:hidden">
                           <PlayCircleOutline />
                         </span>{" "}
-                        {item.name[language]}
+                        {item.name?.[language]}
                       </Link>
                     </p>
                     <p className="hidden md:block absolute right-0 text-sm  cursor-pointer">
@@ -104,20 +119,20 @@ const ResutContainer = ({ header, language, state, setLoader }) => {
                     </p>
                   </div>
                   <div className="flex overflow-hidden mx-auto  w-11/12 xl:w-[1200px] gap-5">
-                    {item.series.map((i, ind) => {
+                    {withTempSeriesFallback(item.series, 4).map((i, ind) => {
                       return (
                         <div
                           key={ind}
                           className="flex justify-center"
                           onClick={() =>
                             setPlayer({
-                              image: getTempHardcodedImage(ind), // TEMPORARY: hardcoded image — revert to i.image
+                              image: getTempHardcodedImage(index * 4 + ind), // TEMPORARY: hardcoded image — revert to i.image
                               link: i.link,
                               open: true,
                             })
                           }
                         >
-                          <EpisodCard item={i} index={ind} />
+                          <EpisodCard item={i} index={index * 4 + ind} />
                         </div>
                       );
                     })}

@@ -9,7 +9,11 @@ import { Dialog } from "@mui/material";
 import ReactPlayer from "react-player";
 import playIcon from "src/assets/images/play.png";
 import EmptyEpisodCard from "./EmptyEpisodCard";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import {
+  getTempHardcodedImage,
+  withTempProgramFallback,
+  withTempSeriesFallback,
+} from "src/utils/tempHardcodedImages";
 
 const ProgramAndShows = ({ header, language, state, setLoader }) => {
   const [player, setPlayer] = useState({
@@ -54,9 +58,17 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
       <p className="text-[#fff] md:text-4xl lg:text-5xl font-semibold w-full text-center max-md:pt-40 pt-24 pb-5 bg-[#17171B]">
         {t("header." + header)}{" "}
       </p>
+      <div className="h-[200px] md:h-[400px] w-full">
+        <img
+          src={getTempHardcodedImage(0)} // TEMPORARY: hardcoded hero — remove when API images are restored
+          alt=""
+          className="h-full w-full object-cover"
+        />
+      </div>
       <div className="pb-12 xl:pb-28 ">
-        {[...state]
+        {withTempProgramFallback(state, 3) // TEMPORARY: fallback when API returns empty
           .sort((a, b) => {
+            if (!a.createdAt || !b.createdAt) return 0;
             if (
               new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()
             ) {
@@ -85,7 +97,7 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
                         <span className="text-red-700 md:hidden">
                           <PlayCircleOutline />
                         </span>{" "}
-                        {item.name[language]}
+                        {item.name?.[language]}
                       </Link>
                     </p>
                     <p className="hidden md:block absolute right-0 text-sm  cursor-pointer">
@@ -96,8 +108,8 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
                     </p>
                   </div>
                   <div className="flex customScrollx overflow-x-scroll mx-auto  w-11/12 xl:w-[1200px] gap-5">
-                    {item.series.map((i, ind) => {
-                      if (item.series.length > 3) {
+                    {withTempSeriesFallback(item.series, 4).map((i, ind) => {
+                      if (item.series?.length > 3) {
                         if (ind < 3) {
                           return (
                             <div
@@ -105,13 +117,13 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
                               className="flex justify-center"
                               onClick={() => {
                                 setPlayer({
-                                  image: getTempHardcodedImage(ind), // TEMPORARY: hardcoded image — revert to i.image
+                                  image: getTempHardcodedImage(index * 4 + ind), // TEMPORARY: hardcoded image — revert to i.image
                                   link: i.link,
                                   open: true,
                                 });
                               }}
                             >
-                              <EpisodCard item={i} index={ind} />
+                              <EpisodCard item={i} index={index * 4 + ind} />
                             </div>
                           );
                         }
@@ -126,8 +138,8 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
                             >
                               <EmptyEpisodCard
                                 item={i}
-                                count={item.series.length - 3}
-                                index={ind}
+                                count={(item.series?.length || 4) - 3}
+                                index={index * 4 + ind}
                               />
                             </div>
                           );
@@ -139,13 +151,13 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
                             className="flex justify-center "
                             onClick={() => {
                               setPlayer({
-                                image: getTempHardcodedImage(ind), // TEMPORARY: hardcoded image — revert to i.image
+                                image: getTempHardcodedImage(index * 4 + ind), // TEMPORARY: hardcoded image — revert to i.image
                                 link: i.link,
                                 open: true,
                               });
                             }}
                           >
-                            <EpisodCard item={i} index={ind} />
+                            <EpisodCard item={i} index={index * 4 + ind} />
                           </div>
                         );
                       }

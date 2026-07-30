@@ -8,7 +8,10 @@ import { getFilmsTC } from "src/redux/reducers/ProgramsAndShows";
 import { connect } from "react-redux";
 import playIcon from "src/assets/images/play.png";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import {
+  getTempHardcodedImage,
+  withTempFilmFallback,
+} from "src/utils/tempHardcodedImages";
 import { useEffect, useState } from "react";
 
 const Films = ({ language, films, setLoader }) => {
@@ -50,11 +53,19 @@ const Films = ({ language, films, setLoader }) => {
       <p className="text-[#fff] md:text-4xl lg:text-5xl font-semibold w-full text-center max-md:pt-40 pt-24 pb-5 bg-[#17171B]">
         {t("header.films")}{" "}
       </p>
+      <div className="h-[200px] md:h-[400px] w-full">
+        <img
+          src={getTempHardcodedImage(1)} // TEMPORARY: hardcoded hero — remove when API images are restored
+          alt=""
+          className="h-full w-full object-cover"
+        />
+      </div>
       <div className="bg-[url('src/assets/images/bgr2.png')] bg-no-repeat bg-[left_center] w-full">
         <div className="mx-auto w-11/12 xl:w-[1200px] py-12 ">
           <div className=" ">
-            {[...films]
+            {withTempFilmFallback(films, 4) // TEMPORARY: fallback when API returns empty
               .sort((a, b) => {
+                if (!a.createdAt || !b.createdAt) return 0;
                 if (
                   new Date(a.createdAt).getTime() <
                   new Date(b.createdAt).getTime()
@@ -80,29 +91,37 @@ const Films = ({ language, films, setLoader }) => {
                       <div className="w-full lg:flex p-10 box-border">
                         <div>
                           <div className="md:w-[500px] h-[200px] md:h-[330px] rounded-2xl overflow-hidden">
-                            <ReactPlayer
-                              width="100%"
-                              height="100%"
-                              playing={true}
-                              controls
-                              url={item.link}
-                              playIcon={
-                                <button>
-                                  <img src={playIcon} width="60px" />
-                                </button>
-                              }
-                              light={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
-                            />
+                            {item.link ? (
+                              <ReactPlayer
+                                width="100%"
+                                height="100%"
+                                playing={true}
+                                controls
+                                url={item.link}
+                                playIcon={
+                                  <button>
+                                    <img src={playIcon} width="60px" />
+                                  </button>
+                                }
+                                light={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                              />
+                            ) : (
+                              <img
+                                src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
+                                alt=""
+                                className="w-full h-full object-cover"
+                              />
+                            )}
                           </div>
                         </div>
                         <div className="lg:flex w-full justify-center items-center pt-5">
                           <div className=" w-4/5">
                             <p className="font-semibold">
-                              {item.name[language]}
+                              {item.name?.[language]}
                             </p>
 
                             <p className="text-xs">
-                              {item.description[language]}
+                              {item.description?.[language]}
                             </p>
                           </div>
                         </div>

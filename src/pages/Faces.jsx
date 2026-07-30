@@ -5,7 +5,10 @@ import FacesCard from "src/component/Faces/FacesCard";
 import ModalFace from "src/component/Faces/ModalFace";
 import { connect } from "react-redux";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import {
+  getTempHardcodedImage,
+  withTempImageFallback,
+} from "src/utils/tempHardcodedImages";
 
 const Faces = ({ faces, setLoader }) => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -67,18 +70,19 @@ const Faces = ({ faces, setLoader }) => {
         {t("header.faces")}
       </p>
       <div className="mx-auto w-11/12 xl:w-[1200px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 py-12 md:py-28">
-        {faces.eachFace.map((item, index) => {
-          if (index < toShow) {
-            return (
-              <FacesCard
-                index={index}
-                item={item}
-                key={index}
-                onClickProps={setCurrentFace}
-              />
-            );
-          }
-        })}
+        {withTempImageFallback(faces.eachFace, 8) // TEMPORARY: fallback when API returns empty
+          .map((item, index) => {
+            if (index < toShow) {
+              return (
+                <FacesCard
+                  index={index}
+                  item={item}
+                  key={index}
+                  onClickProps={setCurrentFace}
+                />
+              );
+            }
+          })}
       </div>
       {/* <div className="w-full flex justify-center md:hidden pb-12">
         <ButtonNew>

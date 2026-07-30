@@ -12,7 +12,10 @@ import {
 } from "src/redux/reducers/EachProgramReducer";
 import playIcon from "src/assets/images/play.png";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import {
+  getTempHardcodedImage,
+  withTempImageFallback,
+} from "src/utils/tempHardcodedImages";
 import {
   ClickAwayListener,
   Collapse,
@@ -84,59 +87,45 @@ const EachProgram = ({
       behavior: "smooth",
     });
   }, []);
+  const displayEpisods = withTempImageFallback(episods, 8); // TEMPORARY: fallback when API returns empty
+
   return (
     <div className="text-lightText dark:text-darkText transit dark:bg-[#333333]">
       <div className="bg-[#0F0F0F] text-darkText pt-28 pb-8">
         <div className="bg-[url('src/assets/images/TV21.png')] bg-no-repeat bg-right-top w-full">
           <div className="mx-auto w-11/12 xl:w-[1200px] lg:flex">
             <div>
-              {[...episods].sort((a, b) => {
-                if (new Date(a.date).getTime() > new Date(b.date).getTime()) {
-                  return 1;
-                }
-                if (new Date(a.date).getTime() < new Date(b.date).getTime()) {
-                  return -1;
-                }
-                return 0;
-              })[episods.length - 1] && (
+              {displayEpisods.length > 0 && (
                 <div className="md:w-[500px] h-[200px] md:h-[330px]">
-                  <ReactPlayer
-                    width="100%"
-                    height="100%"
-                    playing={true}
-                    playIcon={
-                      <button>
-                        <img src={playIcon} width="60px" />
-                      </button>
-                    }
-                    controls
-                    url={
-                      [...episods].sort((a, b) => {
-                        if (
-                          new Date(a.date).getTime() >
-                          new Date(b.date).getTime()
-                        ) {
-                          return 1;
-                        }
-                        if (
-                          new Date(a.date).getTime() <
-                          new Date(b.date).getTime()
-                        ) {
-                          return -1;
-                        }
-                        return 0;
-                      })[episods.length - 1].link
-                    }
-                    light={getTempHardcodedImage(0)} // TEMPORARY: hardcoded image — revert to episods[...].image
-                  />
+                  {displayEpisods[displayEpisods.length - 1]?.link ? (
+                    <ReactPlayer
+                      width="100%"
+                      height="100%"
+                      playing={true}
+                      playIcon={
+                        <button>
+                          <img src={playIcon} width="60px" />
+                        </button>
+                      }
+                      controls
+                      url={displayEpisods[displayEpisods.length - 1].link}
+                      light={getTempHardcodedImage(0)} // TEMPORARY: hardcoded image — revert to episods[...].image
+                    />
+                  ) : (
+                    <img
+                      src={getTempHardcodedImage(0)} // TEMPORARY: hardcoded image — revert to episods[...].image
+                      alt=""
+                      className="w-full h-full object-cover rounded-2xl"
+                    />
+                  )}
                 </div>
               )}
             </div>
             <div className="lg:flex w-full justify-center items-center pt-5">
               <div className=" w-4/5">
-                <p className="font-semibold">{eachProgram.name[language]}</p>
+                <p className="font-semibold">{eachProgram.name?.[language]}</p>
 
-                <p className="text-xs">{eachProgram.description[language]}</p>
+                <p className="text-xs">{eachProgram.description?.[language]}</p>
               </div>
             </div>
           </div>
@@ -197,62 +186,54 @@ const EachProgram = ({
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 ">
-            {episods.length > 0 &&
-              [...episods]
-                .sort((a, b) => {
-                  if (fromNewest) {
-                    if (
-                      new Date(a.date).getTime() < new Date(b.date).getTime()
-                    ) {
-                      return 1;
-                    }
-                    if (
-                      new Date(a.date).getTime() > new Date(b.date).getTime()
-                    ) {
-                      return -1;
-                    }
-                    return 0;
-                  } else {
-                    if (
-                      new Date(a.date).getTime() > new Date(b.date).getTime()
-                    ) {
-                      return 1;
-                    }
-                    if (
-                      new Date(a.date).getTime() < new Date(b.date).getTime()
-                    ) {
-                      return -1;
-                    }
-                    return 0;
+            {displayEpisods
+              .sort((a, b) => {
+                if (!a.date || !b.date) return 0;
+                if (fromNewest) {
+                  if (new Date(a.date).getTime() < new Date(b.date).getTime()) {
+                    return 1;
                   }
-                })
-                .map((item, index) => {
-                  if (
-                    index >= ((currentPage ? currentPage : 1) - 1) * pageSize &&
-                    index < (currentPage ? currentPage : 1) * pageSize
-                  ) {
-                    return (
-                      <div
-                        key={index}
-                        className={`w-full flex justify-center `}
-                        onClick={() =>
-                          setPlayer({
-                            image: getTempHardcodedImage(index), // TEMPORARY: hardcoded image — revert to item.image
-                            link: item.link,
-                            open: true,
-                          })
-                        }
-                      >
-                        <EpisodCard item={item} index={index} />
-                      </div>
-                    );
+                  if (new Date(a.date).getTime() > new Date(b.date).getTime()) {
+                    return -1;
                   }
-                })}
+                  return 0;
+                } else {
+                  if (new Date(a.date).getTime() > new Date(b.date).getTime()) {
+                    return 1;
+                  }
+                  if (new Date(a.date).getTime() < new Date(b.date).getTime()) {
+                    return -1;
+                  }
+                  return 0;
+                }
+              })
+              .map((item, index) => {
+                if (
+                  index >= ((currentPage ? currentPage : 1) - 1) * pageSize &&
+                  index < (currentPage ? currentPage : 1) * pageSize
+                ) {
+                  return (
+                    <div
+                      key={index}
+                      className={`w-full flex justify-center `}
+                      onClick={() =>
+                        setPlayer({
+                          image: getTempHardcodedImage(index), // TEMPORARY: hardcoded image — revert to item.image
+                          link: item.link,
+                          open: true,
+                        })
+                      }
+                    >
+                      <EpisodCard item={item} index={index} />
+                    </div>
+                  );
+                }
+              })}
           </div>
-          {episods.length > pageSize && (
+          {displayEpisods.length > pageSize && (
             <div className="w-full flex justify-end mt-20">
               <Pagination
-                count={Math.ceil(episods.length / pageSize)}
+                count={Math.ceil(displayEpisods.length / pageSize)}
                 currentPage={currentPage ? currentPage : 1}
                 setCurrentPage={(e) => {
                   if (e > 1) {

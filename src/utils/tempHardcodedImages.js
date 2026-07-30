@@ -53,3 +53,28 @@ export const withTempImageFallback = (
   items?.length
     ? items
     : Array.from({ length: count }, (_, index) => ({ _id: `temp-${index}` }));
+
+/** TEMPORARY: placeholder episodes for empty program series */
+export const withTempSeriesFallback = (series, count = 4) =>
+  series?.length
+    ? series
+    : Array.from({ length: count }, (_, index) => ({
+        _id: `temp-series-${index}`,
+      }));
+
+/** TEMPORARY: placeholder programs/shows when API returns empty */
+export const withTempProgramFallback = (programs, count = 3) =>
+  programs?.length
+    ? programs
+    : Array.from({ length: count }, (_, index) => ({
+        _id: `temp-program-${index}`,
+        series: withTempSeriesFallback([], 4),
+      }));
+
+/** TEMPORARY: placeholder films when API returns empty */
+export const withTempFilmFallback = (films, count = 4) =>
+  films?.length
+    ? films
+    : Array.from({ length: count }, (_, index) => ({
+        _id: `temp-film-${index}`,
+      }));

@@ -1,55 +1,57 @@
 // TEMPORARY: Figma-mapped local images (Dar-21 design).
 // Revert by deleting this file and restoring item.image usages in components.
 
-import slide from "src/assets/images/slide.png";
 import teamHero from "src/assets/images/team.jpg";
 
-import ban1 from "src/assets/images/ban1.png";
-import ban2 from "src/assets/images/ban2.png";
-import ban3 from "src/assets/images/ban3.png";
-import ban4 from "src/assets/images/ban4.png";
-import ban5 from "src/assets/images/ban5.png";
-import ban6 from "src/assets/images/ban6.png";
-import ban7 from "src/assets/images/ban7.png";
-import ban8 from "src/assets/images/ban8.png";
+// TEMPORARY: Jul 30 user-uploaded images — homepage screenshot sequence
+import heroBoing from "src/assets/images/events/hero-boing-orchestra.png";
 
-import pic25 from "src/assets/images/pic25.png";
-import pic26 from "src/assets/images/pic26.png";
-import pic27 from "src/assets/images/pic27.png";
-import pic80 from "src/assets/images/pic80.png";
-import pic81 from "src/assets/images/pic81.png";
+import onAir01 from "src/assets/images/events/on-air-01-gevorg-arman.png";
+import onAir02 from "src/assets/images/events/on-air-02-or-bari-hosts.png";
+import onAir03 from "src/assets/images/events/on-air-03-host-presenter.png";
+import onAir04 from "src/assets/images/events/on-air-04-studio-guests.png";
 
-import prog1 from "src/assets/images/prog1.png";
-import prog2 from "src/assets/images/prog2.png";
-import prog3 from "src/assets/images/prog3.png";
-import prog4 from "src/assets/images/prog4.png";
+import event01 from "src/assets/images/events/event-01-yerevanyan-yereko.png";
+import event02 from "src/assets/images/events/event-02-talk-show-collage.png";
+import event03 from "src/assets/images/events/event-03-ore-bari-morning.png";
+import event04 from "src/assets/images/events/event-04-yerevan-evening.png";
+import event05 from "src/assets/images/events/event-05-or-bari-honey.png";
+import event06 from "src/assets/images/events/event-06-without-tie-argishti.png";
+import event07 from "src/assets/images/events/event-07-or-bari-guests.png";
+import event08 from "src/assets/images/events/event-08-gagik-shahbazyan.png";
+
+import face01 from "src/assets/images/events/face-01-host-presenter.png";
+import face02 from "src/assets/images/events/face-02-karen-hambardzumyan.png";
+import face03 from "src/assets/images/events/face-03-tv-interview.png";
+import face04 from "src/assets/images/events/face-04-argishti-aronyan.png";
+import face05 from "src/assets/images/events/face-05-rafo-khachatryan.png";
 
 /** Homepage hero carousel — Boing Orchestra (Figma hero) */
-export const FIGMA_HERO_IMAGES = [slide];
+export const FIGMA_HERO_IMAGES = [heroBoing];
 
-/** "Today on air" sidebar thumbnails */
-export const FIGMA_ON_AIR_IMAGES = [prog1, prog2, prog3, prog4];
+/** "Today on air" sidebar thumbnails (top-to-bottom) */
+export const FIGMA_ON_AIR_IMAGES = [onAir01, onAir02, onAir03, onAir04];
 
-/** Programs grid on homepage (2×4, left-to-right, top-to-bottom) */
+/** Programs/events grid on homepage (2×4, left-to-right, top-to-bottom) */
 export const FIGMA_PROGRAM_BANNERS = [
-  ban8,
-  ban2,
-  ban3,
-  ban4,
-  ban5,
-  ban1,
-  ban7,
-  ban6,
+  event01,
+  event02,
+  event03,
+  event04,
+  event05,
+  event06,
+  event07,
+  event08,
 ];
 
-/** Faces row on homepage + /faces grid (Figma order) */
-export const FIGMA_FACE_PORTRAITS = [pic80, pic26, pic81, pic25, pic27];
+/** Faces row on homepage + /faces grid (left-to-right) */
+export const FIGMA_FACE_PORTRAITS = [face01, face02, face03, face04, face05];
 
 /** Episode cards on programs/shows pages */
-export const FIGMA_EPISODE_IMAGES = [prog1, prog2, prog3, prog4];
+export const FIGMA_EPISODE_IMAGES = [onAir01, onAir02, onAir03, onAir04];
 
 /** Films page items */
-export const FIGMA_FILM_IMAGES = [ban5, ban6, ban7, ban8];
+export const FIGMA_FILM_IMAGES = [event05, event06, event07, event08];
 
 /** /faces page hero banner */
 export const FIGMA_FACES_HERO = teamHero;

@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { monthNames } from "src/utils/config";
 import { connect } from "react-redux";
 import { getScheduleStateTC } from "src/redux/reducers/ScheduleReducer";
+import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
 
 const OnTheAir = ({ main, schedule, getScheduleState }) => {
   const myRef = useRef(undefined);
@@ -25,7 +26,7 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
     } ${new Date().getDate()}, ${new Date().getFullYear()}, 00:00:00`,
     nextDate = `${
       monthNames[new Date().getMonth()]
-    } ${new Date().getDate()}, ${new Date().getFullYear()}, 23:59:59`
+    } ${new Date().getDate()}, ${new Date().getFullYear()}, 23:59:59`,
   ) => {
     if (
       new Date(main.time).getTime() >= new Date(prevDate).getTime() &&
@@ -51,19 +52,19 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
         if (new Date(item.startDate).getHours() < 4) {
           return item.dates.includes(
             `${addZero(
-              new Date(new Date().setDate(new Date().getDate() - 1)).getDate()
+              new Date(new Date().setDate(new Date().getDate() - 1)).getDate(),
             )}-${addZero(
-              new Date().getMonth() + 1
-            )}-${new Date().getFullYear()}`
+              new Date().getMonth() + 1,
+            )}-${new Date().getFullYear()}`,
           );
         } else {
           return item.dates.includes(
             `${addZero(new Date().getDate())}-${addZero(
-              new Date().getMonth() + 1
-            )}-${new Date().getFullYear()}`
+              new Date().getMonth() + 1,
+            )}-${new Date().getFullYear()}`,
           );
         }
-      })
+      }),
     );
   }, [schedule]);
   return (
@@ -98,7 +99,7 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
                   checkTime(
                     item.startDate,
                     onAir[index + 1 > onAir.length - 1 ? 0 : index + 1]
-                      .startDate
+                      .startDate,
                   )
                     ? "bg-white/20 hover:bg-white/40"
                     : ""
@@ -107,7 +108,7 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
                   checkTime(
                     item.startDate,
                     onAir[index + 1 > onAir.length - 1 ? 0 : index + 1]
-                      .startDate
+                      .startDate,
                   )
                     ? myRef
                     : null
@@ -117,7 +118,7 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
                   <div className="w-[135px] h-[95px] lg:w-[155px] ml-3 rounded-lg overflow-hidden">
                     <div className="h-full w-full ">
                       <img
-                        src={item.image}
+                        src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
                         className="h-full w-full object-cover"
                       />
                     </div>
@@ -130,7 +131,7 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
                       <p className="text-white/70 text-xs mb-1">{`${t(
                         `calendar.${
                           monthNames[new Date(item.startDate).getMonth()]
-                        }`
+                        }`,
                       )} ${
                         new Date(item.startDate).getTime() >
                         new Date(
@@ -139,16 +140,16 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
                           new Date().getDate(),
                           23,
                           59,
-                          59
+                          59,
                         ).getTime()
                           ? addZero(
                               new Date(
-                                new Date().setDate(new Date().getDate() + 1)
-                              ).getDate()
+                                new Date().setDate(new Date().getDate() + 1),
+                              ).getDate(),
                             )
                           : addZero(new Date().getDate())
                       } ${addZero(
-                        new Date(item.startDate).getHours()
+                        new Date(item.startDate).getHours(),
                       )}:${addZero(new Date(item.startDate).getMinutes())}`}</p>
                     </div>
                   </div>

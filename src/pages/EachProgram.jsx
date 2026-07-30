@@ -12,6 +12,7 @@ import {
 } from "src/redux/reducers/EachProgramReducer";
 import playIcon from "src/assets/images/play.png";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
+import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
 import {
   ClickAwayListener,
   Collapse,
@@ -126,23 +127,7 @@ const EachProgram = ({
                         return 0;
                       })[episods.length - 1].link
                     }
-                    light={
-                      [...episods].sort((a, b) => {
-                        if (
-                          new Date(a.date).getTime() >
-                          new Date(b.date).getTime()
-                        ) {
-                          return 1;
-                        }
-                        if (
-                          new Date(a.date).getTime() <
-                          new Date(b.date).getTime()
-                        ) {
-                          return -1;
-                        }
-                        return 0;
-                      })[episods.length - 1].image
-                    }
+                    light={getTempHardcodedImage(0)} // TEMPORARY: hardcoded image — revert to episods[...].image
                   />
                 </div>
               )}
@@ -252,13 +237,13 @@ const EachProgram = ({
                         className={`w-full flex justify-center `}
                         onClick={() =>
                           setPlayer({
-                            image: item.image,
+                            image: getTempHardcodedImage(index), // TEMPORARY: hardcoded image — revert to item.image
                             link: item.link,
                             open: true,
                           })
                         }
                       >
-                        <EpisodCard item={item} />
+                        <EpisodCard item={item} index={index} />
                       </div>
                     );
                   }

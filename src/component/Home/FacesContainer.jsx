@@ -7,6 +7,7 @@ import {
   getEachfacesStateAC,
   hoverFaceCardAC,
 } from "src/redux/reducers/FacesReducer";
+import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
 
 const FacesContainer = ({ facesProps, language }) => {
   const [faces, setFaces] = useState([]);
@@ -113,7 +114,7 @@ const FacesContainer = ({ facesProps, language }) => {
                 } else {
                   return { ...item, hover: false };
                 }
-              })
+              }),
             );
           }}
         >
@@ -126,7 +127,7 @@ const FacesContainer = ({ facesProps, language }) => {
                 <div className="relative w-full h-full">
                   <img
                     className="w-full h-full object-cover"
-                    src={item.image}
+                    src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
                     width="320px"
                     alt=""
                     onMouseEnter={() => {

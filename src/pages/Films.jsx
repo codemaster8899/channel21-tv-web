@@ -8,6 +8,7 @@ import { getFilmsTC } from "src/redux/reducers/ProgramsAndShows";
 import { connect } from "react-redux";
 import playIcon from "src/assets/images/play.png";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
+import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
 import { useEffect, useState } from "react";
 
 const Films = ({ language, films, setLoader }) => {
@@ -90,7 +91,7 @@ const Films = ({ language, films, setLoader }) => {
                                   <img src={playIcon} width="60px" />
                                 </button>
                               }
-                              light={item.image}
+                              light={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
                             />
                           </div>
                         </div>

@@ -6,6 +6,7 @@ import Slider, { slickGoTo } from "react-slick";
 
 import ButtonNew from "src/component/ButtonNew";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
+import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
 const settings = {
   infinite: false,
   speed: 500,
@@ -158,7 +159,7 @@ const BanersContainer = ({ programs, setLoader }) => {
                 >
                   <Link to={`/tab_${item._id}`}>
                     <img
-                      src={item.image}
+                      src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
                       width="285"
                       height="315"
                       onClick={() => {}}

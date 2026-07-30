@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Dialog } from "@mui/material";
 import ReactPlayer from "react-player";
 import playIcon from "src/assets/images/play.png";
+import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
 
 const ResutContainer = ({ header, language, state, setLoader }) => {
   const [player, setPlayer] = useState({
@@ -63,7 +64,7 @@ const ResutContainer = ({ header, language, state, setLoader }) => {
                               <img src={playIcon} width="60px" />
                             </button>
                           }
-                          light={item.image}
+                          light={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
                         />
                       </div>
                     </div>
@@ -110,13 +111,13 @@ const ResutContainer = ({ header, language, state, setLoader }) => {
                           className="flex justify-center"
                           onClick={() =>
                             setPlayer({
-                              image: i.image,
+                              image: getTempHardcodedImage(ind), // TEMPORARY: hardcoded image — revert to i.image
                               link: i.link,
                               open: true,
                             })
                           }
                         >
-                          <EpisodCard item={i} />
+                          <EpisodCard item={i} index={ind} />
                         </div>
                       );
                     })}

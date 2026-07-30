@@ -9,6 +9,7 @@ import { Dialog } from "@mui/material";
 import ReactPlayer from "react-player";
 import playIcon from "src/assets/images/play.png";
 import EmptyEpisodCard from "./EmptyEpisodCard";
+import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
 
 const ProgramAndShows = ({ header, language, state, setLoader }) => {
   const [player, setPlayer] = useState({
@@ -104,13 +105,13 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
                               className="flex justify-center"
                               onClick={() => {
                                 setPlayer({
-                                  image: i.image,
+                                  image: getTempHardcodedImage(ind), // TEMPORARY: hardcoded image — revert to i.image
                                   link: i.link,
                                   open: true,
                                 });
                               }}
                             >
-                              <EpisodCard item={i} />
+                              <EpisodCard item={i} index={ind} />
                             </div>
                           );
                         }
@@ -126,6 +127,7 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
                               <EmptyEpisodCard
                                 item={i}
                                 count={item.series.length - 3}
+                                index={ind}
                               />
                             </div>
                           );
@@ -137,13 +139,13 @@ const ProgramAndShows = ({ header, language, state, setLoader }) => {
                             className="flex justify-center "
                             onClick={() => {
                               setPlayer({
-                                image: i.image,
+                                image: getTempHardcodedImage(ind), // TEMPORARY: hardcoded image — revert to i.image
                                 link: i.link,
                                 open: true,
                               });
                             }}
                           >
-                            <EpisodCard item={i} />
+                            <EpisodCard item={i} index={ind} />
                           </div>
                         );
                       }

@@ -5,6 +5,7 @@ import FacesCard from "src/component/Faces/FacesCard";
 import ModalFace from "src/component/Faces/ModalFace";
 import { connect } from "react-redux";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
+import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
 
 const Faces = ({ faces, setLoader }) => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -55,7 +56,7 @@ const Faces = ({ faces, setLoader }) => {
     <div className="text-lightText dark:text-darkText transit dark:bg-[#333333]">
       <div className="h-[250px] md:h-[600px] w-full ">
         <img
-          src={faces.content.image}
+          src={getTempHardcodedImage(0)} // TEMPORARY: hardcoded image — revert to faces.content.image
           alt="team"
           width="100%"
           height="600px"

@@ -13,6 +13,7 @@ import { getSliderStateTC } from "src/redux/reducers/SliderReducer";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
 import Carousel from "./Carousel";
 import playIcon from "src/assets/images/play.png";
+import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
 
 const PlayButton = styled(Button)(() => ({
   borderRadius: "60px",
@@ -39,7 +40,12 @@ const SwiperContainer = ({
   useEffect(() => {
     let newItem = JSON.parse(JSON.stringify(item));
     if (item.link) {
-      setPlayer({ open: true, link: newItem.link, image: newItem.image });
+      const slideIndex = slider.findIndex((s) => s.link === item.link);
+      setPlayer({
+        open: true,
+        link: newItem.link,
+        image: getTempHardcodedImage(slideIndex >= 0 ? slideIndex : 0), // TEMPORARY: hardcoded image — revert to newItem.image
+      });
     }
   }, [item]);
   useEffect(() => {
@@ -84,7 +90,7 @@ const SwiperContainer = ({
                 return (
                   <div className="w-full h-full relative" key={`key_${index}`}>
                     <img
-                      src={item.image}
+                      src={getTempHardcodedImage(index)} // TEMPORARY: hardcoded image — revert to item.image
                       className="h-full w-full object-cover"
                       alt=""
                     />

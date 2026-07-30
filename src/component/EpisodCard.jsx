@@ -4,13 +4,15 @@ import { connect } from "react-redux";
 import ReactPlayer from "react-player";
 import { ClickAwayListener, Dialog } from "@mui/material";
 import playIcon from "src/assets/images/play.png";
+import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
 import { useState } from "react";
 
-const EpisodCard = ({ item, language }) => {
+const EpisodCard = ({ item, language, index = 0 }) => {
   const { t } = useTranslation();
+  const tempImage = getTempHardcodedImage(index); // TEMPORARY: hardcoded image — revert to item.image
   const [player, setPlayer] = useState({
     open: false,
-    image: item.image,
+    image: tempImage,
     link: item.link,
   });
   return (
@@ -19,7 +21,7 @@ const EpisodCard = ({ item, language }) => {
       onClick={() => setPlayer({ ...player, open: true })}
     >
       <img
-        src={item.image}
+        src={tempImage} // TEMPORARY: hardcoded image — revert to item.image
         width="285px"
         height="180px"
         alt=""

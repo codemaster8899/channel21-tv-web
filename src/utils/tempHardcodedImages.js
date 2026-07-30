@@ -44,3 +44,12 @@ export const TEMP_HARDCODED_IMAGES = [
 /** TEMPORARY: returns a local image by index (cycles through available images) */
 export const getTempHardcodedImage = (index = 0) =>
   TEMP_HARDCODED_IMAGES[Math.abs(index) % TEMP_HARDCODED_IMAGES.length];
+
+/** TEMPORARY: use API items when available, otherwise render placeholder slots for local images */
+export const withTempImageFallback = (
+  items,
+  count = TEMP_HARDCODED_IMAGES.length,
+) =>
+  items?.length
+    ? items
+    : Array.from({ length: count }, (_, index) => ({ _id: `temp-${index}` }));

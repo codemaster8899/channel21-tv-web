@@ -13,7 +13,10 @@ import { getSliderStateTC } from "src/redux/reducers/SliderReducer";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
 import Carousel from "./Carousel";
 import playIcon from "src/assets/images/play.png";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import {
+  getTempHardcodedImage,
+  withTempImageFallback,
+} from "src/utils/tempHardcodedImages";
 
 const PlayButton = styled(Button)(() => ({
   borderRadius: "60px",
@@ -76,7 +79,7 @@ const SwiperContainer = ({
       <div className="relative">
         <div className="relative h-[250px] md:h-[600px] xl:h-[840px] ">
           <Carousel>
-            {slider
+            {withTempImageFallback(slider, 5) // TEMPORARY: fallback when API returns empty
               .sort((a, b) => {
                 if (a.slider_order > b.slider_order) {
                   return 1;
@@ -94,24 +97,26 @@ const SwiperContainer = ({
                       className="h-full w-full object-cover"
                       alt=""
                     />
-                    <div className="absolute left-5 !h-fit md:left-auto md:right-0 xl:right-28 w-[330px] bottom-8 xl:bottom-32 ">
-                      <h2 className="text-white text-base md:text-3xl font-semibold mb-1 md:mb-3 w-fit">
-                        {item.title[language].toUpperCase()}
-                      </h2>
-                      <p className="text-white w-2/3 mb-2 md:mb-8 text-xs md:text-base">
-                        {item.description[language]}
-                      </p>
-                      <PlayButton
-                        onClick={() => {
-                          setItem(item);
-                        }}
-                      >
-                        <div className="text-white flex items-center gap-4 normal-case w-[141px] justify-center pointer-events-auto">
-                          <img src={require("src/assets/icons/playB.png")} />
-                          <p>{t("swiper.watchNow")}</p>
-                        </div>
-                      </PlayButton>
-                    </div>
+                    {item.title && (
+                      <div className="absolute left-5 !h-fit md:left-auto md:right-0 xl:right-28 w-[330px] bottom-8 xl:bottom-32 ">
+                        <h2 className="text-white text-base md:text-3xl font-semibold mb-1 md:mb-3 w-fit">
+                          {item.title[language].toUpperCase()}
+                        </h2>
+                        <p className="text-white w-2/3 mb-2 md:mb-8 text-xs md:text-base">
+                          {item.description[language]}
+                        </p>
+                        <PlayButton
+                          onClick={() => {
+                            setItem(item);
+                          }}
+                        >
+                          <div className="text-white flex items-center gap-4 normal-case w-[141px] justify-center pointer-events-auto">
+                            <img src={require("src/assets/icons/playB.png")} />
+                            <p>{t("swiper.watchNow")}</p>
+                          </div>
+                        </PlayButton>
+                      </div>
+                    )}
                   </div>
                 );
               })}

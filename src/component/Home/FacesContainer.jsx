@@ -7,7 +7,10 @@ import {
   getEachfacesStateAC,
   hoverFaceCardAC,
 } from "src/redux/reducers/FacesReducer";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import {
+  getTempHardcodedImage,
+  withTempImageFallback,
+} from "src/utils/tempHardcodedImages";
 
 const FacesContainer = ({ facesProps, language }) => {
   const [faces, setFaces] = useState([]);
@@ -74,17 +77,10 @@ const FacesContainer = ({ facesProps, language }) => {
   };
 
   useEffect(() => {
-    if (facesProps.length < 9) {
-      // for (let i = 0; faces.length < 10; i++) {
-      setFaces([
-        ...facesProps,
-        ...facesProps,
-        ...facesProps,
-        ...facesProps,
-        ...facesProps,
-      ]);
-      // }
-    } else setFaces([...facesProps]);
+    const source = withTempImageFallback(facesProps, 8); // TEMPORARY: fallback when API returns empty
+    if (source.length < 9) {
+      setFaces([...source, ...source, ...source, ...source, ...source]);
+    } else setFaces([...source]);
   }, [facesProps]);
 
   return (

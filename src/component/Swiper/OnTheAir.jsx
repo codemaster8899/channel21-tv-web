@@ -7,7 +7,10 @@ import { useTranslation } from "react-i18next";
 import { monthNames } from "src/utils/config";
 import { connect } from "react-redux";
 import { getScheduleStateTC } from "src/redux/reducers/ScheduleReducer";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import {
+  getTempHardcodedImage,
+  withTempImageFallback,
+} from "src/utils/tempHardcodedImages";
 
 const OnTheAir = ({ main, schedule, getScheduleState }) => {
   const myRef = useRef(undefined);
@@ -77,7 +80,7 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
         className="m-2 lg:m-8 mr-2 pr-6 customScroll overflow-y-scroll h-[calc(100%-110px)] scroll-smooth box-border"
         ref={contRef}
       >
-        {onAir
+        {withTempImageFallback(onAir, 6) // TEMPORARY: fallback when API returns empty
           .sort((a, b) => {
             if (
               new Date(a.startDate).getTime() > new Date(b.startDate).getTime()
@@ -126,31 +129,33 @@ const OnTheAir = ({ main, schedule, getScheduleState }) => {
                   <div className="w-[calc(100%-135px)] lg:w-[calc(100%-155px)]]">
                     <div className="w-full">
                       <p className="text-white w-full text-sm font-semibold whitespace-normal mb-1">
-                        {item.name[main.language]}
+                        {item.name?.[main.language]}
                       </p>
-                      <p className="text-white/70 text-xs mb-1">{`${t(
-                        `calendar.${
-                          monthNames[new Date(item.startDate).getMonth()]
-                        }`,
-                      )} ${
-                        new Date(item.startDate).getTime() >
-                        new Date(
-                          new Date().getFullYear(),
-                          new Date().getMonth(),
-                          new Date().getDate(),
-                          23,
-                          59,
-                          59,
-                        ).getTime()
-                          ? addZero(
-                              new Date(
-                                new Date().setDate(new Date().getDate() + 1),
-                              ).getDate(),
-                            )
-                          : addZero(new Date().getDate())
-                      } ${addZero(
-                        new Date(item.startDate).getHours(),
-                      )}:${addZero(new Date(item.startDate).getMinutes())}`}</p>
+                      {item.startDate && (
+                        <p className="text-white/70 text-xs mb-1">{`${t(
+                          `calendar.${
+                            monthNames[new Date(item.startDate).getMonth()]
+                          }`,
+                        )} ${
+                          new Date(item.startDate).getTime() >
+                          new Date(
+                            new Date().getFullYear(),
+                            new Date().getMonth(),
+                            new Date().getDate(),
+                            23,
+                            59,
+                            59,
+                          ).getTime()
+                            ? addZero(
+                                new Date(
+                                  new Date().setDate(new Date().getDate() + 1),
+                                ).getDate(),
+                              )
+                            : addZero(new Date().getDate())
+                        } ${addZero(
+                          new Date(item.startDate).getHours(),
+                        )}:${addZero(new Date(item.startDate).getMinutes())}`}</p>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -6,7 +6,10 @@ import Slider, { slickGoTo } from "react-slick";
 
 import ButtonNew from "src/component/ButtonNew";
 import { setLoaderAC } from "src/redux/reducers/MainReducer";
-import { getTempHardcodedImage } from "src/utils/tempHardcodedImages";
+import {
+  getTempHardcodedImage,
+  withTempImageFallback,
+} from "src/utils/tempHardcodedImages";
 const settings = {
   infinite: false,
   speed: 500,
@@ -141,7 +144,7 @@ const BanersContainer = ({ programs, setLoader }) => {
         </div>
       </div>
       <div className="flex flex-wrap  justify-center  gap-y-3 mx-auto w-11/12 xl:w-[1200px]">
-        {[...programs[current]]
+        {[...withTempImageFallback(programs[current], 8)]
           .sort((a, b) => {
             if (a.banners_order > b.banners_order) {
               return 1;

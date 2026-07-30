@@ -1,7 +1,8 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const BASE_URL = process.env.REACT_APP_API_URL || "https://21-back.vercel.app/";
+// Production uses /api/ (proxied via vercel.json) to avoid cross-origin CORS issues.
+const BASE_URL = process.env.REACT_APP_API_URL || "/api/";
 // const reserv = localStorage.getItem("token");
 let token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjY3ZmIwNmU2NWM4NjViZWQ0MDY2YWIiLCJlbWFpbCI6IjIxdHYuZGV2ZWxvcG1lbnRAZ21haWwuY29tIiwiaWF0IjoxNjUyOTU3NDE3LCJleHAiOjE2NTM1NjIyMTd9.PcLJ-MFRRU1QAD09U_lga2HxBjUGX36oN1ruAw40nCM";

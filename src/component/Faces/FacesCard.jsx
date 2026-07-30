@@ -30,8 +30,7 @@ const FacesCard = ({ index, item, onClickProps, language }) => {
             className="font-semibold cursor-pointer"
             onClick={() => onClickProps(item)}
           >
-            {item.firstName[language]}{" "}
-            {item.lastName && item.lastName[language]}
+            {item.firstName?.[language]} {item.lastName?.[language]}
           </p>
           {/* <p
             className="cursor-pointer"
@@ -53,18 +52,17 @@ const FacesCard = ({ index, item, onClickProps, language }) => {
           onClick={() => onClickProps(item)}
         >
           {" "}
-          {item.description &&
-            item.description[language]
-              .split("")
-              .map((i, ind) => {
-                if (ind < 37) {
-                  return i;
-                }
-                if (ind === 37) {
-                  return "...";
-                }
-              })
-              .join("")}{" "}
+          {item.description?.[language]
+            ?.split("")
+            .map((i, ind) => {
+              if (ind < 37) {
+                return i;
+              }
+              if (ind === 37) {
+                return "...";
+              }
+            })
+            .join("")}{" "}
         </p>
         <div className="flex gap-2 my-2">
           {item.facebookLink && (

@@ -44,8 +44,8 @@ const ModalFace = ({ currentFace, fullWidth, setCurrentFace, language }) => {
               </div>
               <div>
                 <p className="text-xl font-semibold  my-2">
-                  {currentFace.firstName[language]}{" "}
-                  {currentFace.lastName && currentFace.lastName[language]}
+                  {currentFace.firstName?.[language]}{" "}
+                  {currentFace.lastName?.[language]}
                 </p>
                 <p className="text-xs font-medium text-gray-700 mb-5">
                   {currentFace.role && currentFace.role[language]}

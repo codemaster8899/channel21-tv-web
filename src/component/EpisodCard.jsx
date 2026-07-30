@@ -38,22 +38,25 @@ const EpisodCard = ({ item, language, index = 0 }) => {
 
         <div className="w-3/6 border-r borderWhiteGradient mr-2 p-1">
           <p className="text-xs font-semibold whitespace-nowrap">
-            {item.title &&
-              item.title[language]
-                .split("")
-                .map((i, ind) => {
-                  if (ind < 14) {
-                    return i;
-                  }
-                  if (ind === 14) {
-                    return "...";
-                  }
-                })
-                .join("")}
+            {item.title?.[language]
+              ?.split("")
+              .map((i, ind) => {
+                if (ind < 14) {
+                  return i;
+                }
+                if (ind === 14) {
+                  return "...";
+                }
+              })
+              .join("")}
           </p>
           <p className="text-xs font-semibold text-white/60">
-            {t(`calendar.${monthNames[new Date(item.date).getMonth()]}`)}{" "}
-            {new Date(item.date).getDate()}{" "}
+            {item.date && (
+              <>
+                {t(`calendar.${monthNames[new Date(item.date).getMonth()]}`)}{" "}
+                {new Date(item.date).getDate()}{" "}
+              </>
+            )}
           </p>
         </div>
         <div>

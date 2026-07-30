@@ -97,13 +97,13 @@ const SwiperContainer = ({
                       className="h-full w-full object-cover"
                       alt=""
                     />
-                    {item.title && (
+                    {item.title?.[language] && (
                       <div className="absolute left-5 !h-fit md:left-auto md:right-0 xl:right-28 w-[330px] bottom-8 xl:bottom-32 ">
                         <h2 className="text-white text-base md:text-3xl font-semibold mb-1 md:mb-3 w-fit">
                           {item.title[language].toUpperCase()}
                         </h2>
                         <p className="text-white w-2/3 mb-2 md:mb-8 text-xs md:text-base">
-                          {item.description[language]}
+                          {item.description?.[language]}
                         </p>
                         <PlayButton
                           onClick={() => {

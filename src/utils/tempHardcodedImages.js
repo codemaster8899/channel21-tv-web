@@ -45,6 +45,21 @@ export const TEMP_HARDCODED_IMAGES = [
 export const getTempHardcodedImage = (index = 0) =>
   TEMP_HARDCODED_IMAGES[Math.abs(index) % TEMP_HARDCODED_IMAGES.length];
 
+/** TEMPORARY: empty localized fields for placeholder items */
+export const TEMP_LOCALIZED_TEXT = { am: "", en: "", ru: "" };
+
+const createTempPlaceholder = (id) => ({
+  _id: id,
+  firstName: TEMP_LOCALIZED_TEXT,
+  lastName: TEMP_LOCALIZED_TEXT,
+  name: TEMP_LOCALIZED_TEXT,
+  title: TEMP_LOCALIZED_TEXT,
+  description: TEMP_LOCALIZED_TEXT,
+  role: TEMP_LOCALIZED_TEXT,
+  date: new Date().toISOString(),
+  duration: "",
+});
+
 /** TEMPORARY: use API items when available, otherwise render placeholder slots for local images */
 export const withTempImageFallback = (
   items,
@@ -52,22 +67,24 @@ export const withTempImageFallback = (
 ) =>
   items?.length
     ? items
-    : Array.from({ length: count }, (_, index) => ({ _id: `temp-${index}` }));
+    : Array.from({ length: count }, (_, index) =>
+        createTempPlaceholder(`temp-${index}`),
+      );
 
 /** TEMPORARY: placeholder episodes for empty program series */
 export const withTempSeriesFallback = (series, count = 4) =>
   series?.length
     ? series
-    : Array.from({ length: count }, (_, index) => ({
-        _id: `temp-series-${index}`,
-      }));
+    : Array.from({ length: count }, (_, index) =>
+        createTempPlaceholder(`temp-series-${index}`),
+      );
 
 /** TEMPORARY: placeholder programs/shows when API returns empty */
 export const withTempProgramFallback = (programs, count = 3) =>
   programs?.length
     ? programs
     : Array.from({ length: count }, (_, index) => ({
-        _id: `temp-program-${index}`,
+        ...createTempPlaceholder(`temp-program-${index}`),
         series: withTempSeriesFallback([], 4),
       }));
 
@@ -75,6 +92,6 @@ export const withTempProgramFallback = (programs, count = 3) =>
 export const withTempFilmFallback = (films, count = 4) =>
   films?.length
     ? films
-    : Array.from({ length: count }, (_, index) => ({
-        _id: `temp-film-${index}`,
-      }));
+    : Array.from({ length: count }, (_, index) =>
+        createTempPlaceholder(`temp-film-${index}`),
+      );

@@ -1,46 +1,71 @@
-# Getting Started with Create React App
+# Channel 21 TV — Web Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Public-facing website for **Channel 21 TV** (21TV): programs, shows, films, on-air faces, schedule, live stream, and contact.
 
-## Available Scripts
+**Live demo:** [https://21-front-nu.vercel.app](https://21-front-nu.vercel.app)
 
-In the project directory, you can run:
+## About
 
-### `yarn start`
+This is a React single-page app that talks to a Channel 21 backend API. Visitors can browse media content in Armenian, English, and Russian, open program/episode detail pages, search, and watch the live player.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tech stack
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **React 17** (Create React App)
+- **Redux** + Redux Toolkit for app state
+- **React Router** for navigation
+- **Axios** for API calls
+- **i18next** for AM / EN / RU localization
+- **Tailwind CSS** + **MUI** for UI
+- **Swiper / React Player** for carousels and video
+- **Vercel** for hosting (`/api` proxied to the backend)
 
-### `yarn test`
+## Project structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+src/
+  api/           HTTP helpers (GET/POST/PUT/DELETE)
+  pages/         Route-level screens (Home, Programs, Shows, Faces, Films, Schedule, Contact)
+  component/     Shared UI (Header, Footer, cards, carousels, layout)
+  redux/         Store + reducers (programs, faces, schedule, search, live link, …)
+  languages/     Translation files (hy, en, ru)
+  utils/         Config and helpers
+  assets/        Images and icons
+```
 
-### `yarn build`
+### How it works
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. `App.jsx` boots the app and loads programs, shows, films, faces, live link, and contact data into Redux.
+2. `routes.js` maps paths (`/`, `/programs`, `/shows`, `/faces`, `/films`, `/schedule`, `/contact_us`) to pages.
+3. Shared chrome (header/footer, home hero/swiper) lives in `Layout` and header/footer containers.
+4. Detail pages use `/tab_:id` for a specific program/show with episode cards and playback.
+5. API base URL defaults to `/api/` (rewritten on Vercel to the backend). Override with `REACT_APP_API_URL` for local development.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Getting started
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm install
+npm run dev      # development server (react-scripts start)
+npm run build    # production build
+```
 
-### `yarn eject`
+Optional local API override:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+# .env.local
+REACT_APP_API_URL=http://localhost:PORT/
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Multilingual UI (Armenian, English, Russian)
+- Programs, shows, and films catalogs
+- Faces / presenters section
+- TV schedule
+- Live stream playback
+- Contact form and social links
+- Dark theme support
+- Search results page
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Author
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+**codemaster8899**
